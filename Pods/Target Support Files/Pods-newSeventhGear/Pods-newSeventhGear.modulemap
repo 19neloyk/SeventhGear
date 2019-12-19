@@ -1,6 +1,0 @@
-framework module Pods_newSeventhGear {
-  umbrella header "Pods-newSeventhGear-umbrella.h"
-
-  export *
-  module * { export * }
-}

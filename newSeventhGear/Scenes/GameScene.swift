@@ -10,7 +10,6 @@
 import SpriteKit
 import UIKit
 import Foundation
-import GoogleMobileAds
 
 class GameScene: SKScene {
 	var viewController: GameViewController!
@@ -312,7 +311,10 @@ class GameScene: SKScene {
 					if UserDefaults.standard.integer(forKey: "PointsAccumulated") > 5 {
 					self.viewController.presentMenuScene()
 					UserDefaults.standard.set( 0, forKey: "PointsAccumulated" )
-				self.viewController.interstitialDidDismissScreen(self.viewController.interstitial)
+						//Show interstitial ad here instead of doing the following
+						let menuScene = MenuScene(size: self.view!.bounds.size)
+						self.view!.presentScene(menuScene)
+						menuScene.viewController = self.viewController
 					} else {
 					let menuScene = MenuScene(size: self.view!.bounds.size)
 					self.view!.presentScene(menuScene)

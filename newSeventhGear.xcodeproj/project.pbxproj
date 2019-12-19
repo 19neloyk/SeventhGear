@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1A4AB5D0C89ABA3D46C14251 /* Pods_newSeventhGear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790CEDC21720A05A80C69AC4 /* Pods_newSeventhGear.framework */; };
-		223204DA6B15199D1C1CB065 /* Pods_newSeventhGearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AA6878641F5A3EC759A3D9 /* Pods_newSeventhGearUITests.framework */; };
 		6F297C4B22D3EAD300014E22 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F297C4A22D3EAD300014E22 /* ShopScene.swift */; };
 		6F52027922CEC6E900481FC6 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F52027822CEC6E900481FC6 /* MenuScene.swift */; };
 		6F8A2E1422C2EECE0049630E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E1322C2EECE0049630E /* AppDelegate.swift */; };
@@ -19,8 +17,6 @@
 		6F8A2E2422C2EED00049630E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F8A2E2222C2EED00049630E /* LaunchScreen.storyboard */; };
 		6F8A2E2F22C2EED00049630E /* newSeventhGearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E2E22C2EED00049630E /* newSeventhGearTests.swift */; };
 		6F8A2E3A22C2EED00049630E /* newSeventhGearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E3922C2EED00049630E /* newSeventhGearUITests.swift */; };
-		6F8E91EB22E58D7C00884D0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */; };
-		8C3805BDEC4F29B0050A5EDF /* Pods_newSeventhGearTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED05DC27F4E11E0FF369D58 /* Pods_newSeventhGearTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,16 +53,6 @@
 		6F8A2E3522C2EED00049630E /* newSeventhGearUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = newSeventhGearUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F8A2E3922C2EED00049630E /* newSeventhGearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSeventhGearUITests.swift; sourceTree = "<group>"; };
 		6F8A2E3B22C2EED00049630E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		790CEDC21720A05A80C69AC4 /* Pods_newSeventhGear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newSeventhGear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D2F07F2F0CA360236D3B763 /* Pods-newSeventhGear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGear.release.xcconfig"; path = "Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear.release.xcconfig"; sourceTree = "<group>"; };
-		B5DFCE54854AE59DB0155E96 /* Pods-newSeventhGear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGear.debug.xcconfig"; path = "Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear.debug.xcconfig"; sourceTree = "<group>"; };
-		DE9AF956FC04F933AAEBF02F /* Pods-newSeventhGearTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGearTests.debug.xcconfig"; path = "Target Support Files/Pods-newSeventhGearTests/Pods-newSeventhGearTests.debug.xcconfig"; sourceTree = "<group>"; };
-		E12BC7B91D3DB1D3948D2F5F /* Pods-newSeventhGearTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGearTests.release.xcconfig"; path = "Target Support Files/Pods-newSeventhGearTests/Pods-newSeventhGearTests.release.xcconfig"; sourceTree = "<group>"; };
-		E8D104B19AAFEB9C55B9224D /* Pods-newSeventhGearUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGearUITests.debug.xcconfig"; path = "Target Support Files/Pods-newSeventhGearUITests/Pods-newSeventhGearUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		ED1EE158B0BD410C18598347 /* Pods-newSeventhGearUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGearUITests.release.xcconfig"; path = "Target Support Files/Pods-newSeventhGearUITests/Pods-newSeventhGearUITests.release.xcconfig"; sourceTree = "<group>"; };
-		F7AA6878641F5A3EC759A3D9 /* Pods_newSeventhGearUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newSeventhGearUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FED05DC27F4E11E0FF369D58 /* Pods_newSeventhGearTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newSeventhGearTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A4AB5D0C89ABA3D46C14251 /* Pods_newSeventhGear.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8C3805BDEC4F29B0050A5EDF /* Pods_newSeventhGearTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,46 +74,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				223204DA6B15199D1C1CB065 /* Pods_newSeventhGearUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		036FCD7E26E3A4970C6FCA4A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B5DFCE54854AE59DB0155E96 /* Pods-newSeventhGear.debug.xcconfig */,
-				7D2F07F2F0CA360236D3B763 /* Pods-newSeventhGear.release.xcconfig */,
-				DE9AF956FC04F933AAEBF02F /* Pods-newSeventhGearTests.debug.xcconfig */,
-				E12BC7B91D3DB1D3948D2F5F /* Pods-newSeventhGearTests.release.xcconfig */,
-				E8D104B19AAFEB9C55B9224D /* Pods-newSeventhGearUITests.debug.xcconfig */,
-				ED1EE158B0BD410C18598347 /* Pods-newSeventhGearUITests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		293AB284743294BF43CF0F1F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				790CEDC21720A05A80C69AC4 /* Pods_newSeventhGear.framework */,
-				FED05DC27F4E11E0FF369D58 /* Pods_newSeventhGearTests.framework */,
-				F7AA6878641F5A3EC759A3D9 /* Pods_newSeventhGearUITests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		6F8A2E0722C2EECE0049630E = {
 			isa = PBXGroup;
 			children = (
-				6F98C22E22D144240061813F /* AdMob Stuff */,
 				6F8A2E1222C2EECE0049630E /* newSeventhGear */,
 				6F8A2E2D22C2EED00049630E /* newSeventhGearTests */,
 				6F8A2E3822C2EED00049630E /* newSeventhGearUITests */,
 				6F8A2E1122C2EECE0049630E /* Products */,
-				036FCD7E26E3A4970C6FCA4A /* Pods */,
-				293AB284743294BF43CF0F1F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,14 +166,6 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		6F98C22E22D144240061813F /* AdMob Stuff */ = {
-			isa = PBXGroup;
-			children = (
-				6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */,
-			);
-			path = "AdMob Stuff";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -224,11 +173,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6F8A2E3E22C2EED00049630E /* Build configuration list for PBXNativeTarget "newSeventhGear" */;
 			buildPhases = (
-				3790B3BC6FFA5EC7D1D63CA1 /* [CP] Check Pods Manifest.lock */,
 				6F8A2E0C22C2EECE0049630E /* Sources */,
 				6F8A2E0D22C2EECE0049630E /* Frameworks */,
 				6F8A2E0E22C2EECE0049630E /* Resources */,
-				A7AE441AAA098AD43DAFFFDD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -326,7 +273,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F8A2E1F22C2EECE0049630E /* Main.storyboard in Resources */,
-				6F8E91EB22E58D7C00884D0C /* GoogleService-Info.plist in Resources */,
 				6F8A2E2122C2EED00049630E /* Assets.xcassets in Resources */,
 				6F8A2E2422C2EED00049630E /* LaunchScreen.storyboard in Resources */,
 			);
@@ -349,28 +295,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3790B3BC6FFA5EC7D1D63CA1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-newSeventhGear-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		56315D510D65CF927D40016E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,23 +315,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A7AE441AAA098AD43DAFFFDD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ED86F0568F27E17A1A169B7E /* [CP] Check Pods Manifest.lock */ = {
@@ -616,7 +523,6 @@
 		};
 		6F8A2E3F22C2EED00049630E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B5DFCE54854AE59DB0155E96 /* Pods-newSeventhGear.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -637,7 +543,6 @@
 		};
 		6F8A2E4022C2EED00049630E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D2F07F2F0CA360236D3B763 /* Pods-newSeventhGear.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -658,7 +563,6 @@
 		};
 		6F8A2E4222C2EED00049630E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DE9AF956FC04F933AAEBF02F /* Pods-newSeventhGearTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -679,7 +583,6 @@
 		};
 		6F8A2E4322C2EED00049630E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E12BC7B91D3DB1D3948D2F5F /* Pods-newSeventhGearTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -700,7 +603,6 @@
 		};
 		6F8A2E4522C2EED00049630E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8D104B19AAFEB9C55B9224D /* Pods-newSeventhGearUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -720,7 +622,6 @@
 		};
 		6F8A2E4622C2EED00049630E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED1EE158B0BD410C18598347 /* Pods-newSeventhGearUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
