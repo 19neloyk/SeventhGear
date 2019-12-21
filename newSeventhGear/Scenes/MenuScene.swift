@@ -14,7 +14,7 @@ class MenuScene: SKScene {
     var viewController: GameViewController!
     //Initialize logo and labels for use
     
-    var logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
+    let logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
     let highScoreLabel = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
     let playLabel = SKLabelNode(text: "GO")
     let tutorialLabel = SKLabelNode(text: "" )
@@ -37,26 +37,12 @@ class MenuScene: SKScene {
 
         }
         
-        addLabels()
         addLogo()
+        addLabels()
         
     }
     
     func addLogo(){
-        switch UserDefaults.standard.integer(forKey: "Theme") {
-        case 1:
-            logo = SKSpriteNode(imageNamed: "GearWhite")
-        case 2:
-            logo = SKSpriteNode(imageNamed: "GearSaffron")
-        case 3:
-            logo = SKSpriteNode(imageNamed: "GearMangoTango")
-        case 4:
-            logo = SKSpriteNode(imageNamed: "GearOnyx")
-        
-        default:
-            logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
-        }
-        
         logo.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         logo.position = CGPoint(x: frame.midX,y: frame.midY * 1.25)
         let oneRevolution: SKAction = SKAction.rotate(byAngle: CGFloat(2.5), duration: 1) //Make float an accurate 2pi representation
@@ -120,15 +106,6 @@ class MenuScene: SKScene {
         storeLabel.fontName = "AvenirNext-Bold"
         storeLabel.fontColor = UIColor.white
         storeLabel.position = CGPoint(x: frame.midX, y: tutorialLabel.position.y - 2*tutorialLabel.frame.size.height)
-       
-        
-        switch UserDefaults.standard.integer(forKey: "Theme") {
-        case 1:
-            playLabel.fontColor = SKColor.black
-        default:
-            playLabel.fontColor = SKColor.white
-        }
-       // playLabel.fontColor = backgroundColor
         
         addChild(playLabel)
         addChild(highScoreLabel)

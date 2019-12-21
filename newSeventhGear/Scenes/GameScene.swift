@@ -10,9 +10,11 @@
 import SpriteKit
 import UIKit
 import Foundation
+import GoogleMobileAds
 
 class GameScene: SKScene {
 	var viewController: GameViewController!
+	
 	
 	//Gear Image Color Test
 	var maroonGear = SKSpriteNode(imageNamed:"GearGrannySmithApple")
@@ -55,8 +57,6 @@ class GameScene: SKScene {
     //Starting Speed Factor, default is 0.2
     var speedFactor = 0.2
 	
-	//Increasing Gear Points Indicator
-	let gearPointsUp = SKLabelNode(text: "+ 1⚙")
 	
     //Generate Speed for Iteration
     func generateSpeed()->Double{
@@ -159,7 +159,7 @@ class GameScene: SKScene {
 			maroonGear = SKSpriteNode(imageNamed: "GearSaffron")
 			blueGear = SKSpriteNode(imageNamed: "GearStarCommandBlue")
 			greenGear = SKSpriteNode(imageNamed: "GearRoseRed")
-			pinkGear = SKSpriteNode(imageNamed: "GearGreen")
+			pinkGear = SKSpriteNode(imageNamed: "GearCarribeanGreen")
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 3{
 			backgroundColor =  UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
@@ -311,10 +311,7 @@ class GameScene: SKScene {
 					if UserDefaults.standard.integer(forKey: "PointsAccumulated") > 5 {
 					self.viewController.presentMenuScene()
 					UserDefaults.standard.set( 0, forKey: "PointsAccumulated" )
-						//Show interstitial ad here instead of doing the following
-						let menuScene = MenuScene(size: self.view!.bounds.size)
-						self.view!.presentScene(menuScene)
-						menuScene.viewController = self.viewController
+				self.viewController.interstitialDidDismissScreen(self.viewController.interstitial)
 					} else {
 					let menuScene = MenuScene(size: self.view!.bounds.size)
 					self.view!.presentScene(menuScene)
@@ -361,13 +358,6 @@ class GameScene: SKScene {
 			}
 		default: self.scoreLabel.text = String(Int(score + 1))
 		}
-		
-		gearPointsUp.fontSize = 30
-		gearPointsUp.fontName = "AvenirNext-Bold"
-		gearPointsUp.fontColor = UIColor.white
-		gearPointsUp.position = CGPoint(x: frame.midX, y: scoreLabel.position.y + 1.5 * scoreLabel.frame.height )
-		addChild(gearPointsUp)
-		
 		leftGear.removeAllActions()
 		speedFactor = generateSpeed()
 		let durationDecreaserMultiple = 2.25 //Used to be 1.8
@@ -377,12 +367,6 @@ class GameScene: SKScene {
 		leftGear.run(SKAction.rotate(byAngle: CGFloat(durationDecreaserMultiple*(-6.2831853)), duration: actionDuration))
 		rightGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
 		rightGear.run(SKAction.rotate(byAngle: CGFloat(durationDecreaserMultiple*6.2831853), duration: actionDuration))
-		
-		Timer.scheduledTimer(withTimeInterval: actionDuration/3, repeats: false, block: {_ in
-			self.gearPointsUp.removeFromParent()
-		})
-		
-		//gearPointsUp.run(SKAction.fadeOut(withDuration: actionDuration/2))
 		Timer.scheduledTimer(withTimeInterval: actionDuration, repeats: false, block: {_ in
 			self.score = self.score + 1
 			self.leftGear.removeAllActions()
