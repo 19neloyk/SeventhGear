@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1A4AB5D0C89ABA3D46C14251 /* Pods_newSeventhGear.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 790CEDC21720A05A80C69AC4 /* Pods_newSeventhGear.framework */; };
 		223204DA6B15199D1C1CB065 /* Pods_newSeventhGearUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AA6878641F5A3EC759A3D9 /* Pods_newSeventhGearUITests.framework */; };
+		27CF386D23B0254600A0F4D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27CF386C23B0254600A0F4D4 /* GoogleService-Info.plist */; };
 		6F297C4B22D3EAD300014E22 /* ShopScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F297C4A22D3EAD300014E22 /* ShopScene.swift */; };
 		6F52027922CEC6E900481FC6 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F52027822CEC6E900481FC6 /* MenuScene.swift */; };
 		6F8A2E1422C2EECE0049630E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E1322C2EECE0049630E /* AppDelegate.swift */; };
@@ -19,7 +20,6 @@
 		6F8A2E2422C2EED00049630E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F8A2E2222C2EED00049630E /* LaunchScreen.storyboard */; };
 		6F8A2E2F22C2EED00049630E /* newSeventhGearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E2E22C2EED00049630E /* newSeventhGearTests.swift */; };
 		6F8A2E3A22C2EED00049630E /* newSeventhGearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8A2E3922C2EED00049630E /* newSeventhGearUITests.swift */; };
-		6F8E91EB22E58D7C00884D0C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */; };
 		8C3805BDEC4F29B0050A5EDF /* Pods_newSeventhGearTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FED05DC27F4E11E0FF369D58 /* Pods_newSeventhGearTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27CF386C23B0254600A0F4D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6F297C4A22D3EAD300014E22 /* ShopScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopScene.swift; sourceTree = "<group>"; };
 		6F52027822CEC6E900481FC6 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		6F8A2E1022C2EECE0049630E /* newSeventhGear.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newSeventhGear.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,7 +58,6 @@
 		6F8A2E3522C2EED00049630E /* newSeventhGearUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = newSeventhGearUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F8A2E3922C2EED00049630E /* newSeventhGearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newSeventhGearUITests.swift; sourceTree = "<group>"; };
 		6F8A2E3B22C2EED00049630E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		790CEDC21720A05A80C69AC4 /* Pods_newSeventhGear.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_newSeventhGear.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D2F07F2F0CA360236D3B763 /* Pods-newSeventhGear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGear.release.xcconfig"; path = "Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear.release.xcconfig"; sourceTree = "<group>"; };
 		B5DFCE54854AE59DB0155E96 /* Pods-newSeventhGear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-newSeventhGear.debug.xcconfig"; path = "Target Support Files/Pods-newSeventhGear/Pods-newSeventhGear.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		6F98C22E22D144240061813F /* AdMob Stuff */ = {
 			isa = PBXGroup;
 			children = (
-				6F8E91EA22E58D7C00884D0C /* GoogleService-Info.plist */,
+				27CF386C23B0254600A0F4D4 /* GoogleService-Info.plist */,
 			);
 			path = "AdMob Stuff";
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6F8A2E1F22C2EECE0049630E /* Main.storyboard in Resources */,
-				6F8E91EB22E58D7C00884D0C /* GoogleService-Info.plist in Resources */,
+				27CF386D23B0254600A0F4D4 /* GoogleService-Info.plist in Resources */,
 				6F8A2E2122C2EED00049630E /* Assets.xcassets in Resources */,
 				6F8A2E2422C2EED00049630E /* LaunchScreen.storyboard in Resources */,
 			);
