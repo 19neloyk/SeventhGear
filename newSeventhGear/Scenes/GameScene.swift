@@ -159,7 +159,7 @@ class GameScene: SKScene {
 			maroonGear = SKSpriteNode(imageNamed: "GearSaffron")
 			blueGear = SKSpriteNode(imageNamed: "GearStarCommandBlue")
 			greenGear = SKSpriteNode(imageNamed: "GearRoseRed")
-			pinkGear = SKSpriteNode(imageNamed: "GearCarribeanGreen")
+			pinkGear = SKSpriteNode(imageNamed: "GearCarribeanGreenV2") 
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 3{
 			backgroundColor =  UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
