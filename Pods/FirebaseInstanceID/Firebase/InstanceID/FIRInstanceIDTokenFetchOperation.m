@@ -26,7 +26,6 @@
 #import "NSError+FIRInstanceID.h"
 
 #import <FirebaseCore/FIRAppInternal.h>
-#import <FirebaseCore/FIRHeartbeatInfo.h>
 
 // We can have a static int since this error should theoretically only
 // happen once (for the first time). If it repeats there is something
@@ -34,8 +33,6 @@
 static int phoneRegistrationErrorRetryCount = 0;
 static const int kMaxPhoneRegistrationErrorRetryCount = 10;
 NSString *const kFIRInstanceIDFirebaseUserAgentKey = @"X-firebase-client";
-NSString *const kFIRInstanceIDFirebaseHeartbeatKey = @"X-firebase-client-log-type";
-NSString *const kFIRInstanceIDHeartbeatTag = @"fire-iid";
 
 @implementation FIRInstanceIDTokenFetchOperation
 
@@ -63,8 +60,6 @@ NSString *const kFIRInstanceIDHeartbeatTag = @"fire-iid";
   [request setValue:checkinVersionInfo forHTTPHeaderField:@"info"];
   [request setValue:[FIRApp firebaseUserAgent]
       forHTTPHeaderField:kFIRInstanceIDFirebaseUserAgentKey];
-  [request setValue:@([FIRHeartbeatInfo heartbeatCodeForTag:kFIRInstanceIDHeartbeatTag]).stringValue
-      forHTTPHeaderField:kFIRInstanceIDFirebaseHeartbeatKey];
 
   // Build form-encoded body
   NSString *deviceAuthID = self.checkinPreferences.deviceID;

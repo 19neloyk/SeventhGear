@@ -61,7 +61,9 @@ class GameScene: SKScene {
     //Generate Speed for Iteration
     func generateSpeed()->Double{
 		let limit = 0.5
-        let baseSpeed = (limit * pow(0.1, 1/(score+2)))
+		let x = score
+		let baseSpeed = ((limit-0.1)*x)/(x+7) + 0.1
+       // let baseSpeed = (limit * pow(0.1, 1/(score+2)))
         let variation = arc4random_uniform(3)
         if variation == 1{
             return baseSpeed * 0.96
@@ -183,8 +185,8 @@ class GameScene: SKScene {
         leftGear.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         print(leftGear.size)
         rightGear.size = leftGear.size
-        leftGear.position = CGPoint(x: 0, y: frame.size.width/6)
-        rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/6)
+		leftGear.position = CGPoint(x: 0, y: frame.size.width/3.5)
+		rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/3.5)
 
         //Initialize Score Label
         scoreLabel.text = "SCORE"
@@ -286,7 +288,6 @@ class GameScene: SKScene {
 		let msInterval = (currentTime - referenceTime!)*1000
 		teethLabel.text = String(speedFactor)
 		
-		//The code under this is for debugging
 		// nteethLabel.text = String(isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval))
 		if !(inProcessOfUpdating){scoreLabel.text = String(Int(score))}
 		let insertionLocation = 0.93 * (self.frame.size.width/1.5)
@@ -360,7 +361,7 @@ class GameScene: SKScene {
 		}
 		leftGear.removeAllActions()
 		speedFactor = generateSpeed()
-		let durationDecreaserMultiple = 2.25 //Used to be 1.8
+		let durationDecreaserMultiple = 3.0 //Used to be 1.8
 		let actionDuration = 1/(durationDecreaserMultiple*self.speedFactor)
 		let horizontalTranslation = -1 * (self.frame.size.width/1.75) //as opposed to -200
 		leftGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
@@ -373,12 +374,12 @@ class GameScene: SKScene {
 			self.leftGear.removeFromParent()
 			self.leftGear = self.rightGearHolder
 			self.leftGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/6)
+			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3.5)
 			self.rightGear.removeAllActions()
 			self.rightGear.removeFromParent()
 			self.rightGear = self.randomRightGearGenerator()
 			self.rightGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/6)
+			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/3.5)
 			self.rightGear.run(SKAction.moveBy(x: -1 * (self.frame.size.width/1.5), y: 0, duration: actionDuration/3))
 		
 		

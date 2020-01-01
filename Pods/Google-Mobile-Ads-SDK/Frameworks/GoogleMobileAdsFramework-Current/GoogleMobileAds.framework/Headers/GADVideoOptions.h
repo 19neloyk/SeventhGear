@@ -8,6 +8,8 @@
 #import <GoogleMobileAds/GADAdLoader.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Video ad options.
 @interface GADVideoOptions : GADAdLoaderOptions
 
@@ -22,3 +24,5 @@
 @property(nonatomic, assign) BOOL clickToExpandRequested;
 
 @end
+
+NS_ASSUME_NONNULL_END

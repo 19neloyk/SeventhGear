@@ -29,10 +29,10 @@ class ShopScene: SKScene {
     let theme3Options = SKLabelNode(text:"Use")
     let theme4Options = SKLabelNode(text:"Use")
     
-    let theme1Cost = 5
-    let theme2Cost = 5
-    let theme3Cost = 5
-    let theme4Cost = 500
+    let theme1Cost = 100
+    let theme2Cost = 250
+    let theme3Cost = 500
+    let theme4Cost = 1000
     
     let menuButton = SKLabelNode(text:"Main Menu")
     

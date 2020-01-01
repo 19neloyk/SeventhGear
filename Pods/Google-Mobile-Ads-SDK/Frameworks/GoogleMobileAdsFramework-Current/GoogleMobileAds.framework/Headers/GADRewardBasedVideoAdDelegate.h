@@ -9,6 +9,8 @@
 #import <GoogleMobileAds/GADAdReward.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class GADRewardBasedVideoAd;
 
 /// Delegate for receiving state change messages from a GADRewardBasedVideoAd such as ad requests
@@ -18,35 +20,37 @@
 @required
 
 /// Tells the delegate that the reward based video ad has rewarded the user.
-- (void)rewardBasedVideoAd:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd
-    didRewardUserWithReward:(nonnull GADAdReward *)reward;
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+    didRewardUserWithReward:(GADAdReward *)reward;
 
 @optional
 
 /// Tells the delegate that the reward based video ad failed to load.
-- (void)rewardBasedVideoAd:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd
-    didFailToLoadWithError:(nonnull NSError *)error;
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+    didFailToLoadWithError:(NSError *)error;
 
 /// Tells the delegate that a reward based video ad was received.
-- (void)rewardBasedVideoAdDidReceiveAd:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdDidReceiveAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad opened.
-- (void)rewardBasedVideoAdDidOpen:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdDidOpen:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad started playing.
-- (void)rewardBasedVideoAdDidStartPlaying:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdDidStartPlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad completed playing.
-- (void)rewardBasedVideoAdDidCompletePlaying:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdDidCompletePlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad closed.
-- (void)rewardBasedVideoAdDidClose:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdDidClose:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad will leave the application.
-- (void)rewardBasedVideoAdWillLeaveApplication:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdWillLeaveApplication:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 /// Tells the delegate that the reward based video ad's metadata changed. Called when an ad loads,
 /// and when a loaded ad's metadata changes.
-- (void)rewardBasedVideoAdMetadataDidChange:(nonnull GADRewardBasedVideoAd *)rewardBasedVideoAd;
+- (void)rewardBasedVideoAdMetadataDidChange:(GADRewardBasedVideoAd *)rewardBasedVideoAd;
 
 @end
+
+NS_ASSUME_NONNULL_END

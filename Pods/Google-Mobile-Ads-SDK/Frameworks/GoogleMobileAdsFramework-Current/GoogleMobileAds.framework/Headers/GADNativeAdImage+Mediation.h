@@ -8,13 +8,17 @@
 #import <GoogleMobileAds/GADNativeAdImage.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Provides additional GADNativeAdImage initializers.
 @interface GADNativeAdImage (MediationAdditions)
 
 /// Initializes and returns a native ad image object with the provided image.
-- (nonnull instancetype)initWithImage:(nonnull UIImage *)image;
+- (instancetype)initWithImage:(UIImage *)image;
 
 /// Initializes and returns a native ad image object with the provided image URL and image scale.
-- (nonnull instancetype)initWithURL:(nonnull NSURL *)URL scale:(CGFloat)scale;
+- (instancetype)initWithURL:(NSURL *)URL scale:(CGFloat)scale;
 
 @end
+
+NS_ASSUME_NONNULL_END

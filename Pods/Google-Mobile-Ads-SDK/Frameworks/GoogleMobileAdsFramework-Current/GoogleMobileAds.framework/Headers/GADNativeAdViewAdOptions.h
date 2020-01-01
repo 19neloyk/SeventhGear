@@ -8,6 +8,8 @@
 #import <GoogleMobileAds/GADAdLoader.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Position of the AdChoices icon in the containing ad.
 typedef NS_ENUM(NSInteger, GADAdChoicesPosition) {
   GADAdChoicesPositionTopRightCorner,     ///< Top right corner.
@@ -23,3 +25,5 @@ typedef NS_ENUM(NSInteger, GADAdChoicesPosition) {
 @property(nonatomic, assign) GADAdChoicesPosition preferredAdChoicesPosition;
 
 @end
+
+NS_ASSUME_NONNULL_END

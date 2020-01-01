@@ -10,6 +10,8 @@
 
 @class GADUnifiedNativeAd;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Identifies native ad assets.
 @protocol GADUnifiedNativeAdDelegate <NSObject>
 
@@ -19,11 +21,11 @@
 
 /// Called when an impression is recorded for an ad. Only called for Google ads and is not supported
 /// for mediated ads.
-- (void)nativeAdDidRecordImpression:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdDidRecordImpression:(GADUnifiedNativeAd *)nativeAd;
 
 /// Called when a click is recorded for an ad. Only called for Google ads and is not supported for
 /// mediated ads.
-- (void)nativeAdDidRecordClick:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdDidRecordClick:(GADUnifiedNativeAd *)nativeAd;
 
 #pragma mark - Click-Time Lifecycle Notifications
 
@@ -35,19 +37,19 @@
 /// App Store link, your application will be backgrounded. The next method called will be the
 /// applicationWillResignActive: of your UIApplicationDelegate object. Immediately after that,
 /// nativeAdWillLeaveApplication: is called.
-- (void)nativeAdWillPresentScreen:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdWillPresentScreen:(GADUnifiedNativeAd *)nativeAd;
 
 /// Called before dismissing a full screen view.
-- (void)nativeAdWillDismissScreen:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdWillDismissScreen:(GADUnifiedNativeAd *)nativeAd;
 
 /// Called after dismissing a full screen view. Use this opportunity to restart anything you may
 /// have stopped as part of nativeAdWillPresentScreen:.
-- (void)nativeAdDidDismissScreen:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdDidDismissScreen:(GADUnifiedNativeAd *)nativeAd;
 
 /// Called before the application will go to the background or terminate due to an ad action that
 /// will launch another application (such as the App Store). The normal UIApplicationDelegate
 /// methods, like applicationDidEnterBackground:, will be called immediately before this.
-- (void)nativeAdWillLeaveApplication:(nonnull GADUnifiedNativeAd *)nativeAd;
+- (void)nativeAdWillLeaveApplication:(GADUnifiedNativeAd *)nativeAd;
 
 #pragma mark - Mute This Ad
 
@@ -56,3 +58,5 @@
 - (void)nativeAdIsMuted:(nonnull GADUnifiedNativeAd *)nativeAd;
 
 @end
+
+NS_ASSUME_NONNULL_END

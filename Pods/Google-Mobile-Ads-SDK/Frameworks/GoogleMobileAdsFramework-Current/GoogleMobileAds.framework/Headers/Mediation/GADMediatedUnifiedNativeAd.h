@@ -10,6 +10,8 @@
 #import <GoogleMobileAds/GADUnifiedNativeAdAssetIdentifiers.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Provides methods used for constructing native ads. The adapter must return an object conforming
 /// to this protocol for native ad requests.
 @protocol GADMediatedUnifiedNativeAd <NSObject>
@@ -59,21 +61,14 @@
 /// Media content aspect ratio (width/height) or 0 if there's no media content.
 @property(nonatomic, readonly) CGFloat mediaContentAspectRatio;
 
-/// The video's duration in seconds or 0 if there's no video or the duration is unknown.
-@property(nonatomic, readonly) NSTimeInterval duration;
-
-/// The video's current playback time in seconds or 0 if there's no video or the current playback
-/// time is unknown.
-@property(nonatomic, readonly) NSTimeInterval currentTime;
-
 /// Tells the receiver that it has been rendered in |view| with clickable asset views and
 /// nonclickable asset views. viewController should be used to present modal views for the ad.
-- (void)didRenderInView:(nonnull UIView *)view
+- (void)didRenderInView:(UIView *)view
        clickableAssetViews:
-           (nonnull NSDictionary<GADUnifiedNativeAssetIdentifier, UIView *> *)clickableAssetViews
+           (NSDictionary<GADUnifiedNativeAssetIdentifier, UIView *> *)clickableAssetViews
     nonclickableAssetViews:
-        (nonnull NSDictionary<GADUnifiedNativeAssetIdentifier, UIView *> *)nonclickableAssetViews
-            viewController:(nonnull UIViewController *)viewController;
+        (NSDictionary<GADUnifiedNativeAssetIdentifier, UIView *> *)nonclickableAssetViews
+            viewController:(UIViewController *)viewController;
 
 /// Tells the receiver that an impression is recorded. This method is called only once per mediated
 /// native ad.
@@ -82,9 +77,9 @@
 /// Tells the receiver that a user click is recorded on the asset named |assetName|. Full screen
 /// actions should be presented from viewController. This method is called only if
 /// -[GADMAdNetworkAdapter handlesUserClicks] returns NO.
-- (void)didRecordClickOnAssetWithName:(nonnull GADUnifiedNativeAssetIdentifier)assetName
-                                 view:(nonnull UIView *)view
-                       viewController:(nonnull UIViewController *)viewController;
+- (void)didRecordClickOnAssetWithName:(GADUnifiedNativeAssetIdentifier)assetName
+                                 view:(UIView *)view
+                       viewController:(UIViewController *)viewController;
 
 /// Tells the receiver that it has untracked |view|. This method is called when the mediated native
 /// ad is no longer rendered in the provided view and the delegate should stop tracking the view's
@@ -93,3 +88,5 @@
 - (void)didUntrackView:(nullable UIView *)view;
 
 @end
+
+NS_ASSUME_NONNULL_END

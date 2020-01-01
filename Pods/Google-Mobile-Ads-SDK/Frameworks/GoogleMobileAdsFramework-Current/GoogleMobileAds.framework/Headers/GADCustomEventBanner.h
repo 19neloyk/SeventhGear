@@ -11,6 +11,8 @@
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The banner custom event protocol. Your banner custom event handler must implement this protocol.
 @protocol GADCustomEventBanner <NSObject>
 
@@ -30,6 +32,8 @@
 - (void)requestBannerAd:(GADAdSize)adSize
               parameter:(nullable NSString *)serverParameter
                   label:(nullable NSString *)serverLabel
-                request:(nonnull GADCustomEventRequest *)request;
+                request:(GADCustomEventRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END

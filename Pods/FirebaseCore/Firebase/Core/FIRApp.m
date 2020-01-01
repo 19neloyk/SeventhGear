@@ -14,50 +14,33 @@
 
 #include <sys/utsname.h>
 
-#if __has_include(<UIKit/UIKit.h>)
-#import <UIKit/UIKit.h>
-#endif
-
-#if __has_include(<AppKit/AppKit.h>)
-#import <AppKit/AppKit.h>
-#endif
-
 #import "FIRApp.h"
-
 #import "Private/FIRAnalyticsConfiguration.h"
 #import "Private/FIRAppInternal.h"
 #import "Private/FIRBundleUtil.h"
 #import "Private/FIRComponentContainerInternal.h"
 #import "Private/FIRConfigurationInternal.h"
-#import "Private/FIRCoreDiagnosticsConnector.h"
 #import "Private/FIRLibrary.h"
 #import "Private/FIRLogger.h"
 #import "Private/FIROptionsInternal.h"
-#import "Private/FIRVersion.h"
 
-#import <GoogleUtilities/GULAppEnvironmentUtil.h>
-
-#import <objc/runtime.h>
-
-// The kFIRService strings are only here while transitioning CoreDiagnostics from the Analytics
-// pod to a Core dependency. These symbols are not used and should be deleted after the transition.
-NSString *const kFIRServiceAdMob;
-NSString *const kFIRServiceAuth;
-NSString *const kFIRServiceAuthUI;
-NSString *const kFIRServiceCrash;
-NSString *const kFIRServiceDatabase;
-NSString *const kFIRServiceDynamicLinks;
-NSString *const kFIRServiceFirestore;
-NSString *const kFIRServiceFunctions;
-NSString *const kFIRServiceInstanceID;
-NSString *const kFIRServiceInvites;
-NSString *const kFIRServiceMessaging;
-NSString *const kFIRServiceMeasurement;
-NSString *const kFIRServicePerformance;
-NSString *const kFIRServiceRemoteConfig;
-NSString *const kFIRServiceStorage;
-NSString *const kGGLServiceAnalytics;
-NSString *const kGGLServiceSignIn;
+NSString *const kFIRServiceAdMob = @"AdMob";
+NSString *const kFIRServiceAuth = @"Auth";
+NSString *const kFIRServiceAuthUI = @"AuthUI";
+NSString *const kFIRServiceCrash = @"Crash";
+NSString *const kFIRServiceDatabase = @"Database";
+NSString *const kFIRServiceDynamicLinks = @"DynamicLinks";
+NSString *const kFIRServiceFirestore = @"Firestore";
+NSString *const kFIRServiceFunctions = @"Functions";
+NSString *const kFIRServiceInstanceID = @"InstanceID";
+NSString *const kFIRServiceInvites = @"Invites";
+NSString *const kFIRServiceMessaging = @"Messaging";
+NSString *const kFIRServiceMeasurement = @"Measurement";
+NSString *const kFIRServicePerformance = @"Performance";
+NSString *const kFIRServiceRemoteConfig = @"RemoteConfig";
+NSString *const kFIRServiceStorage = @"Storage";
+NSString *const kGGLServiceAnalytics = @"Analytics";
+NSString *const kGGLServiceSignIn = @"SignIn";
 
 NSString *const kFIRDefaultAppName = @"__FIRAPP_DEFAULT";
 NSString *const kFIRAppReadyToConfigureSDKNotification = @"FIRAppReadyToConfigureSDKNotification";
@@ -116,11 +99,23 @@ static NSMutableArray<Class<FIRLibrary>> *sRegisteredAsConfigurable;
 static NSMutableDictionary *sAllApps;
 static FIRApp *sDefaultApp;
 static NSMutableDictionary *sLibraryVersions;
-static dispatch_once_t sFirebaseUserAgentOnceToken;
 
 + (void)configure {
   FIROptions *options = [FIROptions defaultOptions];
   if (!options) {
+    // Read the Info.plist to see if the flag is set. At this point we can't check any user defaults
+    // since the app isn't configured at all, so only rely on the Info.plist value.
+    NSNumber *collectionEnabledPlistValue = [[self class] readDataCollectionSwitchFromPlist];
+    if (collectionEnabledPlistValue == nil || [collectionEnabledPlistValue boolValue]) {
+      [[NSNotificationCenter defaultCenter]
+          postNotificationName:kFIRAppDiagnosticsNotification
+                        object:nil
+                      userInfo:@{
+                        kFIRAppDiagnosticsConfigurationTypeKey : @(FIRConfigTypeCore),
+                        kFIRAppDiagnosticsErrorKey : [FIRApp errorForMissingOptions]
+                      }];
+    }
+
     [NSException raise:kFirebaseCoreErrorDomain
                 format:@"`[FIRApp configure];` (`FirebaseApp.configure()` in Swift) could not find "
                        @"a valid GoogleService-Info.plist in your project. Please download one "
@@ -165,9 +160,8 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
 
   if ([name isEqualToString:kFIRDefaultAppName]) {
     if (sDefaultApp) {
-      // The default app already exixts. Handle duplicate `configure` calls and return.
-      [self appWasConfiguredTwice:sDefaultApp usingOptions:options];
-      return;
+      [NSException raise:kFirebaseCoreErrorDomain
+                  format:@"Default app has already been configured."];
     }
 
     FIRLogDebug(kFIRLoggerCore, @"I-COR000001", @"Configuring the default app.");
@@ -183,9 +177,8 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
 
     @synchronized(self) {
       if (sAllApps && sAllApps[name]) {
-        // The app already exists. Handle a duplicate `configure` call and return.
-        [self appWasConfiguredTwice:sAllApps[name] usingOptions:options];
-        return;
+        [NSException raise:kFirebaseCoreErrorDomain
+                    format:@"App named %@ has already been configured.", name];
       }
     }
 
@@ -199,41 +192,7 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
     }
 
     [FIRApp addAppToAppDictionary:app];
-
-    // The FIRApp instance is ready to go, `sDefaultApp` is assigned, other SDKs are now ready to be
-    // instantiated.
-    [app.container instantiateEagerComponents];
     [FIRApp sendNotificationsToSDKs:app];
-  }
-}
-
-/// Called when `configure` has been called multiple times for the same app. This can either throw
-/// an exception (most cases) or ignore the duplicate configuration in situations where it's allowed
-/// like an extension.
-+ (void)appWasConfiguredTwice:(FIRApp *)app usingOptions:(FIROptions *)options {
-  // Only extensions should potentially be able to call `configure` more than once.
-  if (![GULAppEnvironmentUtil isAppExtension]) {
-    // Throw an exception since this is now an invalid state.
-    if (app.isDefaultApp) {
-      [NSException raise:kFirebaseCoreErrorDomain
-                  format:@"Default app has already been configured."];
-    } else {
-      [NSException raise:kFirebaseCoreErrorDomain
-                  format:@"App named %@ has already been configured.", app.name];
-    }
-  }
-
-  // In an extension, the entry point could be called multiple times. As long as the options are
-  // identical we should allow multiple `configure` calls.
-  if ([options isEqual:app.options]) {
-    // Everything is identical but the extension's lifecycle triggered `configure` twice.
-    // Ignore duplicate calls and return since everything should still be in a valid state.
-    FIRLogDebug(kFIRLoggerCore, @"I-COR000035",
-                @"Ignoring second `configure` call in an extension.");
-    return;
-  } else {
-    [NSException raise:kFirebaseCoreErrorDomain
-                format:@"App named %@ has already been configured.", app.name];
   }
 }
 
@@ -278,7 +237,6 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
     sAllApps = nil;
     [sLibraryVersions removeAllObjects];
     sLibraryVersions = nil;
-    sFirebaseUserAgentOnceToken = 0;
   }
 }
 
@@ -332,17 +290,30 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
   return self;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (BOOL)configureCore {
   [self checkExpectedBundleID];
   if (![self isAppIDValid]) {
+    if (_options.usingOptionsFromDefaultPlist && [self isDataCollectionDefaultEnabled]) {
+      [[NSNotificationCenter defaultCenter]
+          postNotificationName:kFIRAppDiagnosticsNotification
+                        object:nil
+                      userInfo:@{
+                        kFIRAppDiagnosticsConfigurationTypeKey : @(FIRConfigTypeCore),
+                        kFIRAppDiagnosticsErrorKey : [FIRApp errorForInvalidAppID],
+                      }];
+    }
     return NO;
   }
 
-  [self logCoreTelemetryIfEnabled];
+  if ([self isDataCollectionDefaultEnabled]) {
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:kFIRAppDiagnosticsNotification
+                      object:nil
+                    userInfo:@{
+                      kFIRAppDiagnosticsConfigurationTypeKey : @(FIRConfigTypeCore),
+                      kFIRAppDiagnosticsFIRAppKey : self
+                    }];
+  }
 
 #if TARGET_OS_IOS
   // Initialize the Analytics once there is a valid options under default app. Analytics should
@@ -366,8 +337,6 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
     }
   }
 #endif
-
-  [self subscribeForAppDidBecomeActiveNotifications];
 
   return YES;
 }
@@ -395,7 +364,7 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
   }
 
   // Check if the Analytics flag is explicitly set. If so, no further actions are necessary.
-  if ([self.options isAnalyticsCollectionExplicitlySet]) {
+  if ([self.options isAnalyticsCollectionExpicitlySet]) {
     return;
   }
 
@@ -560,25 +529,6 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
 
 + (NSString *)firebaseUserAgent {
   @synchronized(self) {
-    dispatch_once(&sFirebaseUserAgentOnceToken, ^{
-      // Report FirebaseCore version for useragent string
-      [FIRApp registerLibrary:@"fire-ios"
-                  withVersion:[NSString stringWithUTF8String:FIRCoreVersionString]];
-
-      NSDictionary<NSString *, id> *info = [[NSBundle mainBundle] infoDictionary];
-      NSString *xcodeVersion = info[@"DTXcodeBuild"];
-      NSString *sdkVersion = info[@"DTSDKBuild"];
-      if (xcodeVersion) {
-        [FIRApp registerLibrary:@"xcode" withVersion:xcodeVersion];
-      }
-      if (sdkVersion) {
-        [FIRApp registerLibrary:@"apple-sdk" withVersion:sdkVersion];
-      }
-
-      NSString *swiftFlagValue = [self hasSwiftRuntime] ? @"true" : @"false";
-      [FIRApp registerLibrary:@"swift" withVersion:swiftFlagValue];
-    });
-
     NSMutableArray<NSString *> *libraries =
         [[NSMutableArray<NSString *> alloc] initWithCapacity:sLibraryVersions.count];
     for (NSString *libraryName in sLibraryVersions) {
@@ -588,20 +538,6 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
     [libraries sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     return [libraries componentsJoinedByString:@" "];
   }
-}
-
-+ (BOOL)hasSwiftRuntime {
-  // The class
-  // [Swift._SwiftObject](https://github.com/apple/swift/blob/5eac3e2818eb340b11232aff83edfbd1c307fa03/stdlib/public/runtime/SwiftObject.h#L35)
-  // is a part of Swift runtime, so it should be present if Swift runtime is available.
-
-  BOOL hasSwiftRuntime =
-      objc_lookUpClass("Swift._SwiftObject") != nil ||
-      // Swift object class name before
-      // https://github.com/apple/swift/commit/9637b4a6e11ddca72f5f6dbe528efc7c92f14d01
-      objc_getClass("_TtCs12_SwiftObject") != nil;
-
-  return hasSwiftRuntime;
 }
 
 - (void)checkExpectedBundleID {
@@ -873,40 +809,26 @@ static dispatch_once_t sFirebaseUserAgentOnceToken;
 
 #pragma mark - Sending Logs
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-parameter"
 - (void)sendLogsWithServiceName:(NSString *)serviceName
                         version:(NSString *)version
                           error:(NSError *)error {
-  // Do nothing. Please remove calls to this method.
-}
-#pragma clang diagnostic pop
-
-#pragma mark - App Life Cycle
-
-- (void)subscribeForAppDidBecomeActiveNotifications {
-#if TARGET_OS_IOS || TARGET_OS_TV
-  NSNotificationName notificationName = UIApplicationDidBecomeActiveNotification;
-#endif
-
-#if TARGET_OS_OSX
-  NSNotificationName notificationName = NSApplicationDidBecomeActiveNotification;
-#endif
-
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(appDidBecomeActive:)
-                                               name:notificationName
-                                             object:nil];
-}
-
-- (void)appDidBecomeActive:(NSNotification *)notification {
-  [self logCoreTelemetryIfEnabled];
-}
-
-- (void)logCoreTelemetryIfEnabled {
-  if ([self isDataCollectionDefaultEnabled]) {
-    [FIRCoreDiagnosticsConnector logCoreTelemetryWithOptions:_options];
+  // If the user has manually turned off data collection, return and don't send logs.
+  if (![self isDataCollectionDefaultEnabled]) {
+    return;
   }
+
+  NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] initWithDictionary:@{
+    kFIRAppDiagnosticsConfigurationTypeKey : @(FIRConfigTypeSDK),
+    kFIRAppDiagnosticsSDKNameKey : serviceName,
+    kFIRAppDiagnosticsSDKVersionKey : version,
+    kFIRAppDiagnosticsFIRAppKey : self
+  }];
+  if (error) {
+    userInfo[kFIRAppDiagnosticsErrorKey] = error;
+  }
+  [[NSNotificationCenter defaultCenter] postNotificationName:kFIRAppDiagnosticsNotification
+                                                      object:nil
+                                                    userInfo:userInfo];
 }
 
 @end

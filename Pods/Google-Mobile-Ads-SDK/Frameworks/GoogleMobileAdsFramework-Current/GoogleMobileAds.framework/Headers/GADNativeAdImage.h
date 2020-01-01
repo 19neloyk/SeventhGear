@@ -9,6 +9,8 @@
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Native ad image.
 @interface GADNativeAdImage : NSObject
 
@@ -22,3 +24,5 @@
 @property(nonatomic, readonly, assign) CGFloat scale;
 
 @end
+
+NS_ASSUME_NONNULL_END

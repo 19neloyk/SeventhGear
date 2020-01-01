@@ -10,6 +10,8 @@
 
 @class GADRequest;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Google AdMob Ads error domain.
 GAD_EXTERN NSString *const kGADErrorDomain;
 
@@ -18,57 +20,53 @@ typedef NS_ENUM(NSInteger, GADErrorCode) {
   /// The ad request is invalid. The localizedFailureReason error description will have more
   /// details. Typically this is because the ad did not have the ad unit ID or root view
   /// controller set.
-  kGADErrorInvalidRequest = 0,
+  kGADErrorInvalidRequest,
 
   /// The ad request was successful, but no ad was returned.
-  kGADErrorNoFill = 1,
+  kGADErrorNoFill,
 
   /// There was an error loading data from the network.
-  kGADErrorNetworkError = 2,
+  kGADErrorNetworkError,
 
   /// The ad server experienced a failure processing the request.
-  kGADErrorServerError = 3,
+  kGADErrorServerError,
 
   /// The current device's OS is below the minimum required version.
-  kGADErrorOSVersionTooLow = 4,
+  kGADErrorOSVersionTooLow,
 
   /// The request was unable to be loaded before being timed out.
-  kGADErrorTimeout = 5,
+  kGADErrorTimeout,
 
   /// Will not send request because the interstitial object has already been used.
-  kGADErrorInterstitialAlreadyUsed GAD_DEPRECATED_MSG_ATTRIBUTE("Use kGADErrorAdAlreadyUsed.") = 6,
+  kGADErrorInterstitialAlreadyUsed,
 
   /// The mediation response was invalid.
-  kGADErrorMediationDataError = 7,
+  kGADErrorMediationDataError,
 
   /// Error finding or creating a mediation ad network adapter.
-  kGADErrorMediationAdapterError = 8,
+  kGADErrorMediationAdapterError,
+
+  /// The mediation request was successful, but no ad was returned from any ad networks.
+  kGADErrorMediationNoFill,
 
   /// Attempting to pass an invalid ad size to an adapter.
-  kGADErrorMediationInvalidAdSize = 10,
+  kGADErrorMediationInvalidAdSize,
 
   /// Internal error.
-  kGADErrorInternalError = 11,
+  kGADErrorInternalError,
 
   /// Invalid argument error.
-  kGADErrorInvalidArgument = 12,
+  kGADErrorInvalidArgument,
 
   /// Received invalid response.
-  kGADErrorReceivedInvalidResponse = 13,
+  kGADErrorReceivedInvalidResponse,
 
   /// Will not send request because the rewarded ad object has already been used.
-  kGADErrorRewardedAdAlreadyUsed GAD_DEPRECATED_MSG_ATTRIBUTE("Use kGADErrorAdAlreadyUsed.") = 14,
-
-  /// Deprecated error code, use kGADErrorNoFill.
-  kGADErrorMediationNoFill GAD_DEPRECATED_MSG_ATTRIBUTE("Use kGADErrorNoFill.") = 9,
-
-  /// Will not send request because the ad object has already been used.
-  kGADErrorAdAlreadyUsed = 19,
-
-  /// Will not send request because the application identifier is missing.
-  kGADErrorApplicationIdentifierMissing = 20,
+  kGADErrorRewardedAdAlreadyUsed,
 };
 
 /// Represents the error generated due to invalid request parameters.
 @interface GADRequestError : NSError
 @end
+
+NS_ASSUME_NONNULL_END
