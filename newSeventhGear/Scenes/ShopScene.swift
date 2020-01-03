@@ -81,13 +81,13 @@ class ShopScene: SKScene {
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-            backgroundColor = UIColor.black
+            backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-            backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
+            backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-            backgroundColor = UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
             backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+            backgroundColor = UIColor.black
 
         }
         

@@ -27,13 +27,13 @@ class MenuScene: SKScene {
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-            backgroundColor = UIColor.black
+            backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-            backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
+            backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-            backgroundColor = UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
             backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+            backgroundColor = UIColor.black
 
         }
         
@@ -67,30 +67,31 @@ class MenuScene: SKScene {
         let highestMode: String
         let highScore =  UserDefaults.standard.integer(forKey: "Highscore")
         let modeColor:UIColor
+        modeColor = UIColor.white
         if highScore < 7 {
             highestMode = "walker"
-            modeColor = UIColor.yellow
+         //   modeColor = UIColor.yellow
         } else if highScore < 14 {
             highestMode = "jogger"
-            modeColor = UIColor.green
+         //   modeColor = UIColor.green
         } else if highScore < 21 {
             highestMode = "biker"
-            modeColor = UIColor.gray
+          //  modeColor = UIColor.gray
         } else if highScore < 28 {
             highestMode = "trucker"
-            modeColor = UIColor.blue
+         //   modeColor = UIColor.blue
         } else if highScore < 35 {
             highestMode = "cruiser"
-            modeColor = UIColor.orange
+          //  modeColor = UIColor.orange
         } else if highScore < 42 {
             highestMode = "speeder"
-            modeColor = UIColor.purple
+          //  modeColor = UIColor.purple
         }else if highScore < 49 {
             highestMode = "racer"
-            modeColor = UIColor.green
+         //   modeColor = UIColor.green
         } else {
            highestMode = "drifter"
-            modeColor = UIColor.red
+         //   modeColor = UIColor.red
         }
 
         highScoreLabel.text = "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))" + " (" + highestMode + ")"

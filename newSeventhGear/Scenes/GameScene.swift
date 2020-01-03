@@ -150,32 +150,34 @@ class GameScene: SKScene {
 		if UserDefaults.standard.integer(forKey: "Theme") == 0{
 			backgroundColor = defaultBackgroundColor
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-			backgroundColor = UIColor.black
-			maroonGear = SKSpriteNode(imageNamed: "GearWhite")
-			blueGear = SKSpriteNode(imageNamed: "GearWhite")
-			greenGear = SKSpriteNode(imageNamed: "GearWhite")
-			pinkGear = SKSpriteNode(imageNamed: "GearWhite")
+			backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
+			maroonGear = SKSpriteNode(imageNamed: "Gear3-1")
+			blueGear = SKSpriteNode(imageNamed: "Gear3-3")
+			greenGear = SKSpriteNode(imageNamed: "Gear3-4")
+			pinkGear = SKSpriteNode(imageNamed: "Gear3-5")
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-			backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
-			maroonGear = SKSpriteNode(imageNamed: "GearSaffron")
-			blueGear = SKSpriteNode(imageNamed: "GearStarCommandBlue")
-			greenGear = SKSpriteNode(imageNamed: "GearRoseRed")
-			pinkGear = SKSpriteNode(imageNamed: "GearCarribeanGreenV2") 
+			backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0) 
+			maroonGear = SKSpriteNode(imageNamed: "Gear2-1")
+			blueGear = SKSpriteNode(imageNamed: "Gear2-3")
+			greenGear = SKSpriteNode(imageNamed: "Gear2-4")
+			pinkGear = SKSpriteNode(imageNamed: "Gear2-5")
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-			backgroundColor =  UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-			maroonGear = SKSpriteNode(imageNamed: "GearPrussianBlue")
-			blueGear = SKSpriteNode(imageNamed: "GearRed(Pigment)")
-			greenGear = SKSpriteNode(imageNamed: "GearMangoTango")
-			pinkGear = SKSpriteNode(imageNamed: "GearBottleGreen")
-			
-		} else if UserDefaults.standard.integer(forKey: "Theme") == 4{
 			backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
 			maroonGear = SKSpriteNode(imageNamed: "GearBananaYellow")
 			blueGear = SKSpriteNode(imageNamed: "GearSapphire")
 			greenGear = SKSpriteNode(imageNamed: "GearOnyx")
 			pinkGear = SKSpriteNode(imageNamed: "GearRed-Orange")
+			
+		} else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+			
+			
+			backgroundColor = UIColor.black
+			maroonGear = SKSpriteNode(imageNamed: "GearWhite")
+			blueGear = SKSpriteNode(imageNamed: "GearWhite")
+			greenGear = SKSpriteNode(imageNamed: "GearWhite")
+			pinkGear = SKSpriteNode(imageNamed: "GearWhite")
 			
 		}
 		
@@ -185,8 +187,8 @@ class GameScene: SKScene {
         leftGear.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         print(leftGear.size)
         rightGear.size = leftGear.size
-		leftGear.position = CGPoint(x: 0, y: frame.size.width/3.5)
-		rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/3.5)
+		leftGear.position = CGPoint(x: 0, y: frame.size.width/3)
+		rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/3)
 
         //Initialize Score Label
         scoreLabel.text = "SCORE"
@@ -203,7 +205,7 @@ class GameScene: SKScene {
 		//Initialize Intruction Label and Timer (including fading in/out animation)
 		nteethLabel.fontSize = 25
 		nteethLabel.fontColor = SKColor.white
-		nteethLabel.position = CGPoint(x: frame.midX, y: rightGear.position.y + frame.size.width/2)
+		nteethLabel.position = CGPoint(x: frame.midX, y: scoreLabel.position.y + frame.size.width/4)
 		nteethLabel.text = "connect right gear to left gear"
 		
 		let instructionTimeInterval = 2
@@ -334,34 +336,34 @@ class GameScene: SKScene {
 				self.scoreLabel.fontSize = 40
 			}
 		case 1: do {self.scoreLabel.text = "walking"
-				self.scoreLabel.fontColor = UIColor.yellow
+			//	self.scoreLabel.fontColor = UIColor.yellow
 			}
 		case 6:  do {self.scoreLabel.text = "jogging"
-				self.scoreLabel.fontColor = UIColor.green
+			//	self.scoreLabel.fontColor = UIColor.green
 			}
 		case 13: do {self.scoreLabel.text = "biking"
-			self.scoreLabel.fontColor = UIColor.gray
+			//self.scoreLabel.fontColor = UIColor.gray
 			}
 		case 20: do {self.scoreLabel.text = "trucking"
-			self.scoreLabel.fontColor = UIColor.blue
+			//self.scoreLabel.fontColor = UIColor.blue
 			}
 		case 27: do {self.scoreLabel.text = "cruising"
-			self.scoreLabel.fontColor = UIColor.orange
+			//self.scoreLabel.fontColor = UIColor.orange
 			}
 		case 34: do {self.scoreLabel.text = "speeding"
-			self.scoreLabel.fontColor = UIColor.purple
+			//self.scoreLabel.fontColor = UIColor.purple
 			}
 		case 41: do {self.scoreLabel.text = "racing"
-			self.scoreLabel.fontColor = UIColor.green
+			//self.scoreLabel.fontColor = UIColor.green
 			}
 		case 48: do {self.scoreLabel.text = "drifting"
-			self.scoreLabel.fontColor = UIColor.red
+			//self.scoreLabel.fontColor = UIColor.red
 			}
 		default: self.scoreLabel.text = String(Int(score + 1))
 		}
 		leftGear.removeAllActions()
 		speedFactor = generateSpeed()
-		let durationDecreaserMultiple = 3.0 //Used to be 1.8
+		let durationDecreaserMultiple = 2.5 //Used to be 1.8
 		let actionDuration = 1/(durationDecreaserMultiple*self.speedFactor)
 		let horizontalTranslation = -1 * (self.frame.size.width/1.75) //as opposed to -200
 		leftGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
@@ -374,12 +376,12 @@ class GameScene: SKScene {
 			self.leftGear.removeFromParent()
 			self.leftGear = self.rightGearHolder
 			self.leftGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3.5)
+			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3)
 			self.rightGear.removeAllActions()
 			self.rightGear.removeFromParent()
 			self.rightGear = self.randomRightGearGenerator()
 			self.rightGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/3.5)
+			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/3)
 			self.rightGear.run(SKAction.moveBy(x: -1 * (self.frame.size.width/1.5), y: 0, duration: actionDuration/3))
 		
 		
