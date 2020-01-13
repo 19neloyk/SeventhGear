@@ -14,7 +14,7 @@ class MenuScene: SKScene {
     var viewController: GameViewController!
     //Initialize logo and labels for use
     
-    let logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
+    var logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
     let highScoreLabel = SKLabelNode(text: "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))")
     let playLabel = SKLabelNode(text: "GO")
     let tutorialLabel = SKLabelNode(text: "" )
@@ -24,6 +24,8 @@ class MenuScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+      //  refreshPointsAndHighscore()
+        viewController!.currentScene = "menu"
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
@@ -43,6 +45,15 @@ class MenuScene: SKScene {
     }
     
     func addLogo(){
+        if UserDefaults.standard.integer(forKey: "Theme") == 1 {
+            logo = SKSpriteNode(imageNamed: "Gear3-1")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 2 {
+            logo = SKSpriteNode(imageNamed: "Gear2-1")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 3 {
+            logo = SKSpriteNode(imageNamed: "GearOnyx")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4 {
+            logo = SKSpriteNode(imageNamed: "GearWhite")
+        }
         logo.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         logo.position = CGPoint(x: frame.midX,y: frame.midY * 1.25)
         let oneRevolution: SKAction = SKAction.rotate(byAngle: CGFloat(2.5), duration: 1) //Make float an accurate 2pi representation
@@ -55,7 +66,11 @@ class MenuScene: SKScene {
     func addLabels(){
         playLabel.fontSize = 70
         playLabel.fontName = "AvenirNext-Bold"
-        playLabel.fontColor = SKColor.white
+        if UserDefaults.standard.integer(forKey: "Theme") == 4 {
+            playLabel.fontColor = SKColor.black
+        } else {
+            playLabel.fontColor = SKColor.white
+        }
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY * 1.25 - 25)
         playLabel.zPosition = 1
         
@@ -127,6 +142,12 @@ class MenuScene: SKScene {
             shopScene.viewController = self.viewController
             view!.presentScene(shopScene)
         }
+    }
+    
+    //Refreshing these attributes for the sake of testing
+    func refreshPointsAndHighscore () {
+        UserDefaults.standard.set(0, forKey: "Highscore")
+        UserDefaults.standard.set(0, forKey: "GearPoints")
     }
     
     

@@ -13,12 +13,13 @@ import GoogleMobileAds
 class GameViewController: UIViewController {
     var bannerView: GADBannerView!
     var interstitial: GADInterstitial!
+    var currentScene = ""
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
     }
     func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910") //production id: ca-app-pub-4955915426675862/2924970725
+        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-4955915426675862/2924970725") //production id: ca-app-pub-4955915426675862/2924970725
         interstitial.delegate = self as? GADInterstitialDelegate
         interstitial.load(GADRequest())
         return interstitial
@@ -47,13 +48,13 @@ class GameViewController: UIViewController {
         // In this case, we instantiate the banner with desired ad size.
         bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
         addBannerViewToViewTop(bannerView)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //production id: ca-app-pub-4955915426675862/8971504320
+        bannerView.adUnitID = "ca-app-pub-4955915426675862/8971504320" //production id: ca-app-pub-4955915426675862/8971504320
         bannerView.rootViewController = self
         bannerView.load(GADRequest())
      
         interstitial = createAndLoadInterstitial()
         
-
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
 
         presentMenuScene()
         if let view = self.view as! SKView? {
@@ -96,6 +97,12 @@ class GameViewController: UIViewController {
                                 constant: 0)
             ])
     }
+    
+    @objc func willResignActive(_ notification: Notification) {
+        if currentScene == "game" {
+            presentMenuScene()
+        }
+    }
     /*
     func addBannerViewToViewBottom(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
@@ -117,4 +124,6 @@ class GameViewController: UIViewController {
                                 constant: 0)
             ])
     } */
+    
+    
 }

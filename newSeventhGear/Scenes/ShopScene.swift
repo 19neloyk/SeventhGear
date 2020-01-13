@@ -29,10 +29,10 @@ class ShopScene: SKScene {
     let theme3Options = SKLabelNode(text:"Use")
     let theme4Options = SKLabelNode(text:"Use")
     
-    let theme1Cost = 100
-    let theme2Cost = 250
-    let theme3Cost = 500
-    let theme4Cost = 1000
+    let theme1Cost = 75
+    let theme2Cost = 75
+    let theme3Cost = 75
+    let theme4Cost = 75
     
     let menuButton = SKLabelNode(text:"Main Menu")
     
@@ -44,6 +44,7 @@ class ShopScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        viewController.currentScene = "shop"
         if UserDefaults.standard.bool(forKey: "theme1Purchased") == false{
             if UserDefaults.standard.integer(forKey: "GearPoints") >= theme1Cost{
                 theme1Options.text = "Buy (\(theme1Cost) ⚙)"
@@ -56,7 +57,7 @@ class ShopScene: SKScene {
             if UserDefaults.standard.integer(forKey: "GearPoints") >= theme2Cost{
                 theme2Options.text = "Buy (\(theme2Cost) ⚙)"
             } else {
-                theme2Options.text = "\(theme2Cost) ⚙)"
+                theme2Options.text = "\(theme2Cost) ⚙"
                 
             }
         }

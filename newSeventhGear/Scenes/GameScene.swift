@@ -234,7 +234,7 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-		
+		viewController.currentScene = "game"
         layoutScene()
         }
     
@@ -295,6 +295,9 @@ class GameScene: SKScene {
 		let insertionLocation = 0.93 * (self.frame.size.width/1.5)
 		if rightGear.position.x <= (self.frame.size.width/1.5) {
 			if rightGear.position.x <= insertionLocation && !(isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval)) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
+				if Int(self.score+1) > UserDefaults.standard.integer(forKey: "Highscore"){
+					UserDefaults.standard.set(Int(self.score+1), forKey: "Highscore")
+				}
 				updateScenePositive()
 			} else if isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
 				inProcessOfUpdating = true
@@ -317,8 +320,8 @@ class GameScene: SKScene {
 				self.viewController.interstitialDidDismissScreen(self.viewController.interstitial)
 					} else {
 					let menuScene = MenuScene(size: self.view!.bounds.size)
-					self.view!.presentScene(menuScene)
 					menuScene.viewController = self.viewController
+					self.view!.presentScene(menuScene)
 					}
 				})
 			}
