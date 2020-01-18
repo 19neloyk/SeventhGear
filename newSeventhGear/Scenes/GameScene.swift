@@ -84,19 +84,20 @@ class GameScene: SKScene {
         if (randomNumber == 1){
             print("maroon")
 			leftGearHolder = maroonGear.copy() as? SKSpriteNode
+			return leftGearHolder?.copy() as! SKSpriteNode;
         } else if (randomNumber == 2){
             print("blue")
 			leftGearHolder = blueGear.copy() as? SKSpriteNode
+			return leftGearHolder?.copy() as! SKSpriteNode;
         } else if (randomNumber == 3){
             print("green")
 			leftGearHolder = greenGear.copy() as? SKSpriteNode
+			return leftGearHolder?.copy() as! SKSpriteNode;
         } else{
             print("pink")
 			leftGearHolder = pinkGear.copy() as? SKSpriteNode
+			return leftGearHolder?.copy() as! SKSpriteNode;
         }
-		viewController.lastLeftGear = leftGearHolder?.copy() as? SKSpriteNode
-		return leftGearHolder?.copy() as! SKSpriteNode;
-		
     }
 	
 	func randomRightGearGenerator() -> SKSpriteNode{
@@ -105,18 +106,20 @@ class GameScene: SKScene {
 		if (randomNumber == 1){
 			print("maroon")
 			rightGearHolder = maroonGear.copy() as? SKSpriteNode
+			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else if (randomNumber == 2){
 			print("blue")
 			rightGearHolder = blueGear.copy() as? SKSpriteNode
+			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else if (randomNumber == 3){
 			print("green")
 			rightGearHolder = greenGear.copy() as? SKSpriteNode
+			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else{
 			print("pink")
 			rightGearHolder = pinkGear.copy() as? SKSpriteNode
+			return rightGearHolder?.copy() as! SKSpriteNode;
 		}
-		viewController.lastRightGear = rightGearHolder?.copy() as? SKSpriteNode
-		return rightGearHolder?.copy() as! SKSpriteNode;
 	}
 	
     //Rotate Gear Indefinitely
@@ -178,22 +181,9 @@ class GameScene: SKScene {
 			
 		}
 		
-		
-		
-		//Maintains to see if coming from inactive state: if so, take the score from  last time
-		if viewController.lastScore != nil {
-			score = viewController.lastScore!
-		}
-		
-		//Initialize Gears (maintains to see if coming from inactive state: if so, then make the gears the gears in the last run; if not, then make new gears)
-		if viewController.lastLeftGear != nil && viewController.lastRightGear != nil {
-			leftGear = viewController.lastLeftGear
-			rightGearHolder = viewController.lastRightGear?.copy() as? SKSpriteNode
-			rightGear = rightGearHolder?.copy() as? SKSpriteNode
-		} else {
-			leftGear = randomLeftGearGenerator()
-			rightGear = randomRightGearGenerator()
-		}
+		//Initialize Gears
+        leftGear = randomLeftGearGenerator()
+        rightGear = randomRightGearGenerator()
         leftGear.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         print(leftGear.size)
         rightGear.size = leftGear.size
@@ -244,7 +234,7 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-		viewController.gameScene = self
+		
         layoutScene()
         }
     
@@ -305,15 +295,8 @@ class GameScene: SKScene {
 		let insertionLocation = 0.93 * (self.frame.size.width/1.5)
 		if rightGear.position.x <= (self.frame.size.width/1.5) {
 			if rightGear.position.x <= insertionLocation && !(isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval)) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
-				if Int(self.score+1) > UserDefaults.standard.integer(forKey: "Highscore"){
-					UserDefaults.standard.set(Int(self.score+1), forKey: "Highscore")
-				}
 				updateScenePositive()
 			} else if isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
-				viewController.lastScore = 0.0
-				UserDefaults.standard.set(0.0, forKey: "LastScore")
-				viewController.lastLeftGear = nil
-				viewController.lastRightGear = nil
 				inProcessOfUpdating = true
 				scoreLabel.fontSize = 40
 				scoreLabel.text = "Final Score: " + String(Int(score))
@@ -321,6 +304,7 @@ class GameScene: SKScene {
 				leftGear.run(SKAction.fadeOut(withDuration: 2))
 				rightGear.run(SKAction.fadeOut(withDuration: 2))
 				let scoreInt = Int(score)
+				UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "GearPoints") + scoreInt, forKey: "GearPoints")
 				if scoreInt > UserDefaults.standard.integer(forKey: "Highscore"){
 					UserDefaults.standard.set(scoreInt, forKey: "Highscore")
 				}
@@ -333,8 +317,8 @@ class GameScene: SKScene {
 				self.viewController.interstitialDidDismissScreen(self.viewController.interstitial)
 					} else {
 					let menuScene = MenuScene(size: self.view!.bounds.size)
-					menuScene.viewController = self.viewController
 					self.view!.presentScene(menuScene)
+					menuScene.viewController = self.viewController
 					}
 				})
 			}
@@ -346,12 +330,6 @@ class GameScene: SKScene {
 	
 	//used in update function to change the scene after point is scored
 	func updateScenePositive(){
-		self.score = self.score + 1
-		UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "GearPoints") + 1, forKey: "GearPoints")
-		let scoreInt = Int(self.score)
-		if scoreInt > UserDefaults.standard.integer(forKey: "Highscore"){
-			UserDefaults.standard.set(scoreInt, forKey: "Highscore")
-		}
 		inProcessOfUpdating = true
 		switch self.score{
 		case 0 : do{self.scoreLabel.text = "gets faster mate"
@@ -381,13 +359,7 @@ class GameScene: SKScene {
 		case 48: do {self.scoreLabel.text = "drifting"
 			//self.scoreLabel.fontColor = UIColor.red
 			}
-		case 55: do {self.scoreLabel.text = "blasting"
-			}
-		case 62: do {self.scoreLabel.text = "zooming"
-			}
-		case 69: do {self.scoreLabel.text = "beaming"
-			}
-		default: self.scoreLabel.text = String(Int(score))
+		default: self.scoreLabel.text = String(Int(score + 1))
 		}
 		leftGear.removeAllActions()
 		speedFactor = generateSpeed()
@@ -399,10 +371,10 @@ class GameScene: SKScene {
 		rightGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
 		rightGear.run(SKAction.rotate(byAngle: CGFloat(durationDecreaserMultiple*6.2831853), duration: actionDuration))
 		Timer.scheduledTimer(withTimeInterval: actionDuration, repeats: false, block: {_ in
+			self.score = self.score + 1
 			self.leftGear.removeAllActions()
 			self.leftGear.removeFromParent()
-			self.leftGear = self.rightGearHolder?.copy() as? SKSpriteNode
-			self.viewController.lastLeftGear = self.leftGear.copy() as? SKSpriteNode
+			self.leftGear = self.rightGearHolder
 			self.leftGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
 			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3)
 			self.rightGear.removeAllActions()
