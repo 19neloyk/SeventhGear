@@ -44,7 +44,7 @@ class ShopScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        viewController.gameScene = nil
+        viewController.currentScene = "shop"
         if UserDefaults.standard.bool(forKey: "theme1Purchased") == false{
             if UserDefaults.standard.integer(forKey: "GearPoints") >= theme1Cost{
                 theme1Options.text = "Buy (\(theme1Cost) ⚙)"

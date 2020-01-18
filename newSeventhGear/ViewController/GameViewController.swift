@@ -13,11 +13,7 @@ import GoogleMobileAds
 class GameViewController: UIViewController {
     var bannerView: GADBannerView!
     var interstitial: GADInterstitial!
-    var gameScene:GameScene?
-    var lastScore:Double?
-    var lastLeftGear:SKSpriteNode?
-    var lastRightGear:SKSpriteNode?
-    var sceneActive:Bool?
+    var currentScene = ""
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return .lightContent
@@ -59,10 +55,7 @@ class GameViewController: UIViewController {
         interstitial = createAndLoadInterstitial()
         
         NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
 
-        
         presentMenuScene()
         if let view = self.view as! SKView? {
             
@@ -106,23 +99,10 @@ class GameViewController: UIViewController {
     }
     
     @objc func willResignActive(_ notification: Notification) {
-        if gameScene != nil{
-            lastScore = gameScene?.score
+        if currentScene == "game" {
+            presentMenuScene()
         }
     }
-    
-    @objc func didBecomeActive(_ notification: Notification) {
-        if gameScene != nil{
-            
-            if let view = self.view as! SKView?{
-                let newGameScene = GameScene(size: view.bounds.size)
-                newGameScene.viewController = self
-                view.presentScene(newGameScene)
-                
-            }
-        }
-    }
-    
     /*
     func addBannerViewToViewBottom(_ bannerView: GADBannerView) {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
