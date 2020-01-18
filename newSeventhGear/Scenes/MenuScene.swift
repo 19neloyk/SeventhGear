@@ -25,7 +25,7 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
       //  refreshPointsAndHighscore()
-        viewController!.currentScene = "menu"
+        viewController!.gameScene = nil
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
@@ -104,11 +104,15 @@ class MenuScene: SKScene {
         }else if highScore < 49 {
             highestMode = "racer"
          //   modeColor = UIColor.green
+        } else if highScore < 56 {
+            highestMode = "drifter"
+        } else if highScore < 63 {
+            highestMode = "blaster"
+        } else if highScore < 70 {
+            highestMode = "zoomer"
         } else {
-           highestMode = "drifter"
-         //   modeColor = UIColor.red
+            highestMode = "beamer"
         }
-
         highScoreLabel.text = "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))" + " (" + highestMode + ")"
         highScoreLabel.fontColor = modeColor
         
