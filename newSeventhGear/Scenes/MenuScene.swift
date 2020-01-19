@@ -24,39 +24,36 @@ class MenuScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+      //  refreshPointsAndHighscore()
+        viewController!.gameScenePresent = nil
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-            backgroundColor = UIColor.black
+            backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-            backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
+            backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-            backgroundColor = UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
             backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+            backgroundColor = UIColor.black
 
         }
         
-        addLabels()
         addLogo()
+        addLabels()
         
     }
     
     func addLogo(){
-        switch UserDefaults.standard.integer(forKey: "Theme") {
-        case 1:
-            logo = SKSpriteNode(imageNamed: "GearWhite")
-        case 2:
-            logo = SKSpriteNode(imageNamed: "GearSaffron")
-        case 3:
-            logo = SKSpriteNode(imageNamed: "GearMangoTango")
-        case 4:
+        if UserDefaults.standard.integer(forKey: "Theme") == 1 {
+            logo = SKSpriteNode(imageNamed: "Gear3-1")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 2 {
+            logo = SKSpriteNode(imageNamed: "Gear2-1")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 3 {
             logo = SKSpriteNode(imageNamed: "GearOnyx")
-        
-        default:
-            logo = SKSpriteNode(imageNamed: "GearDesaturatedCyan")
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4 {
+            logo = SKSpriteNode(imageNamed: "GearWhite")
         }
-        
         logo.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         logo.position = CGPoint(x: frame.midX,y: frame.midY * 1.25)
         let oneRevolution: SKAction = SKAction.rotate(byAngle: CGFloat(2.5), duration: 1) //Make float an accurate 2pi representation
@@ -69,7 +66,11 @@ class MenuScene: SKScene {
     func addLabels(){
         playLabel.fontSize = 70
         playLabel.fontName = "AvenirNext-Bold"
-        playLabel.fontColor = SKColor.white
+        if UserDefaults.standard.integer(forKey: "Theme") == 4 {
+            playLabel.fontColor = SKColor.black
+        } else {
+            playLabel.fontColor = SKColor.white
+        }
         playLabel.position = CGPoint(x: frame.midX, y: frame.midY * 1.25 - 25)
         playLabel.zPosition = 1
         
@@ -81,32 +82,37 @@ class MenuScene: SKScene {
         let highestMode: String
         let highScore =  UserDefaults.standard.integer(forKey: "Highscore")
         let modeColor:UIColor
+        modeColor = UIColor.white
         if highScore < 7 {
             highestMode = "walker"
-            modeColor = UIColor.yellow
+         //   modeColor = UIColor.yellow
         } else if highScore < 14 {
             highestMode = "jogger"
-            modeColor = UIColor.green
+         //   modeColor = UIColor.green
         } else if highScore < 21 {
             highestMode = "biker"
-            modeColor = UIColor.gray
+          //  modeColor = UIColor.gray
         } else if highScore < 28 {
             highestMode = "trucker"
-            modeColor = UIColor.blue
+         //   modeColor = UIColor.blue
         } else if highScore < 35 {
             highestMode = "cruiser"
-            modeColor = UIColor.orange
+          //  modeColor = UIColor.orange
         } else if highScore < 42 {
             highestMode = "speeder"
-            modeColor = UIColor.purple
+          //  modeColor = UIColor.purple
         }else if highScore < 49 {
             highestMode = "racer"
-            modeColor = UIColor.green
+         //   modeColor = UIColor.green
+        } else if highScore < 56 {
+            highestMode = "drifter"
+        } else if highScore < 63 {
+            highestMode = "blaster"
+        } else if highScore < 70 {
+            highestMode = "zoomer"
         } else {
-           highestMode = "drifter"
-            modeColor = UIColor.red
+            highestMode = "beamer"
         }
-
         highScoreLabel.text = "Highscore: " + "\(UserDefaults.standard.integer(forKey: "Highscore"))" + " (" + highestMode + ")"
         highScoreLabel.fontColor = modeColor
         
@@ -120,15 +126,6 @@ class MenuScene: SKScene {
         storeLabel.fontName = "AvenirNext-Bold"
         storeLabel.fontColor = UIColor.white
         storeLabel.position = CGPoint(x: frame.midX, y: tutorialLabel.position.y - 2*tutorialLabel.frame.size.height)
-       
-        
-        switch UserDefaults.standard.integer(forKey: "Theme") {
-        case 1:
-            playLabel.fontColor = SKColor.black
-        default:
-            playLabel.fontColor = SKColor.white
-        }
-       // playLabel.fontColor = backgroundColor
         
         addChild(playLabel)
         addChild(highScoreLabel)
@@ -149,6 +146,12 @@ class MenuScene: SKScene {
             shopScene.viewController = self.viewController
             view!.presentScene(shopScene)
         }
+    }
+    
+    //Refreshing these attributes for the sake of testing
+    func refreshPointsAndHighscore () {
+        UserDefaults.standard.set(0, forKey: "Highscore")
+        UserDefaults.standard.set(0, forKey: "GearPoints")
     }
     
     

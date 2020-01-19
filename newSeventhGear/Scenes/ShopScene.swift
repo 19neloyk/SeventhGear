@@ -29,10 +29,10 @@ class ShopScene: SKScene {
     let theme3Options = SKLabelNode(text:"Use")
     let theme4Options = SKLabelNode(text:"Use")
     
-    let theme1Cost = 5
-    let theme2Cost = 5
-    let theme3Cost = 5
-    let theme4Cost = 5
+    let theme1Cost = 75
+    let theme2Cost = 75
+    let theme3Cost = 75
+    let theme4Cost = 75
     
     let menuButton = SKLabelNode(text:"Main Menu")
     
@@ -44,6 +44,7 @@ class ShopScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        viewController.gameScenePresent = nil
         if UserDefaults.standard.bool(forKey: "theme1Purchased") == false{
             if UserDefaults.standard.integer(forKey: "GearPoints") >= theme1Cost{
                 theme1Options.text = "Buy (\(theme1Cost) ⚙)"
@@ -56,7 +57,7 @@ class ShopScene: SKScene {
             if UserDefaults.standard.integer(forKey: "GearPoints") >= theme2Cost{
                 theme2Options.text = "Buy (\(theme2Cost) ⚙)"
             } else {
-                theme2Options.text = "\(theme2Cost) ⚙)"
+                theme2Options.text = "\(theme2Cost) ⚙"
                 
             }
         }
@@ -81,13 +82,13 @@ class ShopScene: SKScene {
         if UserDefaults.standard.integer(forKey: "Theme") == 0{
             backgroundColor = defaultBackgroundColor
         } else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-            backgroundColor = UIColor.black
+            backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-            backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
+            backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0)
         } else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-            backgroundColor = UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
             backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
+        } else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+            backgroundColor = UIColor.black
 
         }
         

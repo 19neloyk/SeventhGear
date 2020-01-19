@@ -10,9 +10,11 @@
 import SpriteKit
 import UIKit
 import Foundation
+import GoogleMobileAds
 
 class GameScene: SKScene {
 	var viewController: GameViewController!
+	var returningFromInactiveState = false
 	
 	//Gear Image Color Test
 	var maroonGear = SKSpriteNode(imageNamed:"GearGrannySmithApple")
@@ -26,6 +28,7 @@ class GameScene: SKScene {
     //Gears on the screen
     var leftGear: SKSpriteNode!
     var rightGear: SKSpriteNode!
+	var leftGearRefCopy: SKSpriteNode!
 	
 	//color for each gear
 	var leftGearColor: UIColor?
@@ -55,13 +58,13 @@ class GameScene: SKScene {
     //Starting Speed Factor, default is 0.2
     var speedFactor = 0.2
 	
-	//Increasing Gear Points Indicator
-	let gearPointsUp = SKLabelNode(text: "+ 1⚙")
 	
     //Generate Speed for Iteration
     func generateSpeed()->Double{
 		let limit = 0.5
-        let baseSpeed = (limit * pow(0.1, 1/(score+2)))
+		let x = score
+		let baseSpeed = ((limit-0.1)*x)/(x+7) + 0.1
+       // let baseSpeed = (limit * pow(0.1, 1/(score+2)))
         let variation = arc4random_uniform(3)
         if variation == 1{
             return baseSpeed * 0.96
@@ -82,20 +85,19 @@ class GameScene: SKScene {
         if (randomNumber == 1){
             print("maroon")
 			leftGearHolder = maroonGear.copy() as? SKSpriteNode
-			return leftGearHolder?.copy() as! SKSpriteNode;
         } else if (randomNumber == 2){
             print("blue")
 			leftGearHolder = blueGear.copy() as? SKSpriteNode
-			return leftGearHolder?.copy() as! SKSpriteNode;
         } else if (randomNumber == 3){
             print("green")
 			leftGearHolder = greenGear.copy() as? SKSpriteNode
-			return leftGearHolder?.copy() as! SKSpriteNode;
         } else{
             print("pink")
 			leftGearHolder = pinkGear.copy() as? SKSpriteNode
-			return leftGearHolder?.copy() as! SKSpriteNode;
         }
+		leftGearRefCopy = leftGearHolder?.copy() as? SKSpriteNode
+		return leftGearHolder?.copy() as! SKSpriteNode;
+		
     }
 	
 	func randomRightGearGenerator() -> SKSpriteNode{
@@ -104,20 +106,17 @@ class GameScene: SKScene {
 		if (randomNumber == 1){
 			print("maroon")
 			rightGearHolder = maroonGear.copy() as? SKSpriteNode
-			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else if (randomNumber == 2){
 			print("blue")
 			rightGearHolder = blueGear.copy() as? SKSpriteNode
-			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else if (randomNumber == 3){
 			print("green")
 			rightGearHolder = greenGear.copy() as? SKSpriteNode
-			return rightGearHolder?.copy() as! SKSpriteNode;
 		} else{
 			print("pink")
 			rightGearHolder = pinkGear.copy() as? SKSpriteNode
-			return rightGearHolder?.copy() as! SKSpriteNode;
 		}
+		return rightGearHolder?.copy() as! SKSpriteNode;
 	}
 	
     //Rotate Gear Indefinitely
@@ -148,32 +147,34 @@ class GameScene: SKScene {
 		if UserDefaults.standard.integer(forKey: "Theme") == 0{
 			backgroundColor = defaultBackgroundColor
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 1{
-			backgroundColor = UIColor.black
-			maroonGear = SKSpriteNode(imageNamed: "GearWhite")
-			blueGear = SKSpriteNode(imageNamed: "GearWhite")
-			greenGear = SKSpriteNode(imageNamed: "GearWhite")
-			pinkGear = SKSpriteNode(imageNamed: "GearWhite")
+			backgroundColor = UIColor(red:216/255, green:151/255, blue:61/255, alpha:1.0)
+			maroonGear = SKSpriteNode(imageNamed: "Gear3-1")
+			blueGear = SKSpriteNode(imageNamed: "Gear3-3")
+			greenGear = SKSpriteNode(imageNamed: "Gear3-4")
+			pinkGear = SKSpriteNode(imageNamed: "Gear3-5")
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 2{
-			backgroundColor = UIColor(red:0.36, green:0.75, blue:0.92, alpha:1.0)
-			maroonGear = SKSpriteNode(imageNamed: "GearSaffron")
-			blueGear = SKSpriteNode(imageNamed: "GearStarCommandBlue")
-			greenGear = SKSpriteNode(imageNamed: "GearRoseRed")
-			pinkGear = SKSpriteNode(imageNamed: "GearGreen")
+			backgroundColor = UIColor(red:52/255, green:90/255, blue:149/255, alpha:1.0)
+			maroonGear = SKSpriteNode(imageNamed: "Gear2-1")
+			blueGear = SKSpriteNode(imageNamed: "Gear2-3")
+			greenGear = SKSpriteNode(imageNamed: "Gear2-4")
+			pinkGear = SKSpriteNode(imageNamed: "Gear2-5")
 			
 		} else if UserDefaults.standard.integer(forKey: "Theme") == 3{
-			backgroundColor =  UIColor(red:1.00, green:0.87, blue:0.63, alpha:1.0)
-			maroonGear = SKSpriteNode(imageNamed: "GearPrussianBlue")
-			blueGear = SKSpriteNode(imageNamed: "GearRed(Pigment)")
-			greenGear = SKSpriteNode(imageNamed: "GearMangoTango")
-			pinkGear = SKSpriteNode(imageNamed: "GearBottleGreen")
-			
-		} else if UserDefaults.standard.integer(forKey: "Theme") == 4{
 			backgroundColor = UIColor(red:0.70, green:0.74, blue:0.69, alpha:1.0)
 			maroonGear = SKSpriteNode(imageNamed: "GearBananaYellow")
 			blueGear = SKSpriteNode(imageNamed: "GearSapphire")
 			greenGear = SKSpriteNode(imageNamed: "GearOnyx")
 			pinkGear = SKSpriteNode(imageNamed: "GearRed-Orange")
+			
+		} else if UserDefaults.standard.integer(forKey: "Theme") == 4{
+			
+			
+			backgroundColor = UIColor.black
+			maroonGear = SKSpriteNode(imageNamed: "GearWhite")
+			blueGear = SKSpriteNode(imageNamed: "GearWhite")
+			greenGear = SKSpriteNode(imageNamed: "GearWhite")
+			pinkGear = SKSpriteNode(imageNamed: "GearWhite")
 			
 		}
 		
@@ -183,8 +184,8 @@ class GameScene: SKScene {
         leftGear.size = CGSize(width:frame.size.width/1.5, height:frame.size.width/1.5)
         print(leftGear.size)
         rightGear.size = leftGear.size
-        leftGear.position = CGPoint(x: 0, y: frame.size.width/6)
-        rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/6)
+		leftGear.position = CGPoint(x: 0, y: frame.size.width/3)
+		rightGear.position = CGPoint(x: frame.size.width, y: frame.size.width/3)
 
         //Initialize Score Label
         scoreLabel.text = "SCORE"
@@ -201,7 +202,7 @@ class GameScene: SKScene {
 		//Initialize Intruction Label and Timer (including fading in/out animation)
 		nteethLabel.fontSize = 25
 		nteethLabel.fontColor = SKColor.white
-		nteethLabel.position = CGPoint(x: frame.midX, y: rightGear.position.y + frame.size.width/2)
+		nteethLabel.position = CGPoint(x: frame.midX, y: scoreLabel.position.y + frame.size.width/4)
 		nteethLabel.text = "connect right gear to left gear"
 		
 		let instructionTimeInterval = 2
@@ -230,7 +231,7 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
-		
+		viewController.gameScenePresent = self
         layoutScene()
         }
     
@@ -278,6 +279,19 @@ class GameScene: SKScene {
     }
 	
 	override func update(_ currentTime: TimeInterval) {
+		if returningFromInactiveState {
+			print("returningFromInactiveState")
+			referenceTime = currentTime
+			leftGear.removeAllActions()
+			leftGear.removeFromParent()
+			leftGear = leftGearRefCopy.copy() as? SKSpriteNode
+			leftGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
+			leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3)
+			addChild(leftGear)
+			leftGear.run(SKAction.rotate(byAngle: CGFloat(6.2831853/16), duration: 0.01))
+			rotateGearIndefinitely(gear: leftGear, positive: leftGearDirection, speedFactor: speedFactor)
+			returningFromInactiveState = false
+		}
 		theCurrentTime = currentTime
 		if isTimeSet == false{
 			referenceTime = currentTime
@@ -286,12 +300,14 @@ class GameScene: SKScene {
 		let msInterval = (currentTime - referenceTime!)*1000
 		teethLabel.text = String(speedFactor)
 		
-		//The code under this is for debugging
 		// nteethLabel.text = String(isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval))
 		if !(inProcessOfUpdating){scoreLabel.text = String(Int(score))}
 		let insertionLocation = 0.93 * (self.frame.size.width/1.5)
 		if rightGear.position.x <= (self.frame.size.width/1.5) {
 			if rightGear.position.x <= insertionLocation && !(isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval)) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
+				if Int(self.score+1) > UserDefaults.standard.integer(forKey: "Highscore"){
+					UserDefaults.standard.set(Int(self.score+1), forKey: "Highscore")
+				}
 				updateScenePositive()
 			} else if isToothOut(speedFactor: speedFactor, timeInMilliseconds: msInterval) && !(rightGear.hasActions()) && !(inProcessOfUpdating){
 				inProcessOfUpdating = true
@@ -301,7 +317,6 @@ class GameScene: SKScene {
 				leftGear.run(SKAction.fadeOut(withDuration: 2))
 				rightGear.run(SKAction.fadeOut(withDuration: 2))
 				let scoreInt = Int(score)
-				UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "GearPoints") + scoreInt, forKey: "GearPoints")
 				if scoreInt > UserDefaults.standard.integer(forKey: "Highscore"){
 					UserDefaults.standard.set(scoreInt, forKey: "Highscore")
 				}
@@ -311,14 +326,11 @@ class GameScene: SKScene {
 					if UserDefaults.standard.integer(forKey: "PointsAccumulated") > 5 {
 					self.viewController.presentMenuScene()
 					UserDefaults.standard.set( 0, forKey: "PointsAccumulated" )
-						//Show interstitial ad here instead of doing the following
-						let menuScene = MenuScene(size: self.view!.bounds.size)
-						self.view!.presentScene(menuScene)
-						menuScene.viewController = self.viewController
+				self.viewController.interstitialDidDismissScreen(self.viewController.interstitial)
 					} else {
 					let menuScene = MenuScene(size: self.view!.bounds.size)
-					self.view!.presentScene(menuScene)
 					menuScene.viewController = self.viewController
+					self.view!.presentScene(menuScene)
 					}
 				})
 			}
@@ -330,71 +342,70 @@ class GameScene: SKScene {
 	
 	//used in update function to change the scene after point is scored
 	func updateScenePositive(){
+		self.score = self.score + 1
+		UserDefaults.standard.set(UserDefaults.standard.integer(forKey: "GearPoints") + 1, forKey: "GearPoints")
+		let scoreInt = Int(self.score)
+		if scoreInt > UserDefaults.standard.integer(forKey: "Highscore"){
+			UserDefaults.standard.set(scoreInt, forKey: "Highscore")
+		}
 		inProcessOfUpdating = true
 		switch self.score{
 		case 0 : do{self.scoreLabel.text = "gets faster mate"
 				self.scoreLabel.fontSize = 40
 			}
 		case 1: do {self.scoreLabel.text = "walking"
-				self.scoreLabel.fontColor = UIColor.yellow
+			//	self.scoreLabel.fontColor = UIColor.yellow
 			}
 		case 6:  do {self.scoreLabel.text = "jogging"
-				self.scoreLabel.fontColor = UIColor.green
+			//	self.scoreLabel.fontColor = UIColor.green
 			}
 		case 13: do {self.scoreLabel.text = "biking"
-			self.scoreLabel.fontColor = UIColor.gray
+			//self.scoreLabel.fontColor = UIColor.gray
 			}
 		case 20: do {self.scoreLabel.text = "trucking"
-			self.scoreLabel.fontColor = UIColor.blue
+			//self.scoreLabel.fontColor = UIColor.blue
 			}
 		case 27: do {self.scoreLabel.text = "cruising"
-			self.scoreLabel.fontColor = UIColor.orange
+			//self.scoreLabel.fontColor = UIColor.orange
 			}
 		case 34: do {self.scoreLabel.text = "speeding"
-			self.scoreLabel.fontColor = UIColor.purple
+			//self.scoreLabel.fontColor = UIColor.purple
 			}
 		case 41: do {self.scoreLabel.text = "racing"
-			self.scoreLabel.fontColor = UIColor.green
+			//self.scoreLabel.fontColor = UIColor.green
 			}
 		case 48: do {self.scoreLabel.text = "drifting"
-			self.scoreLabel.fontColor = UIColor.red
+			//self.scoreLabel.fontColor = UIColor.red
 			}
-		default: self.scoreLabel.text = String(Int(score + 1))
+		case 55: do {self.scoreLabel.text = "blasting"
+			}
+		case 62: do {self.scoreLabel.text = "zooming"
+			}
+		case 69: do {self.scoreLabel.text = "beaming"
+			}
+		default: self.scoreLabel.text = String(Int(score))
 		}
-		
-		gearPointsUp.fontSize = 30
-		gearPointsUp.fontName = "AvenirNext-Bold"
-		gearPointsUp.fontColor = UIColor.white
-		gearPointsUp.position = CGPoint(x: frame.midX, y: scoreLabel.position.y + 1.5 * scoreLabel.frame.height )
-		addChild(gearPointsUp)
-		
 		leftGear.removeAllActions()
 		speedFactor = generateSpeed()
-		let durationDecreaserMultiple = 2.25 //Used to be 1.8
+		let durationDecreaserMultiple = 2.5 //Used to be 1.8
 		let actionDuration = 1/(durationDecreaserMultiple*self.speedFactor)
 		let horizontalTranslation = -1 * (self.frame.size.width/1.75) //as opposed to -200
 		leftGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
 		leftGear.run(SKAction.rotate(byAngle: CGFloat(durationDecreaserMultiple*(-6.2831853)), duration: actionDuration))
 		rightGear.run(SKAction.moveBy(x: horizontalTranslation, y: 0, duration: actionDuration))
 		rightGear.run(SKAction.rotate(byAngle: CGFloat(durationDecreaserMultiple*6.2831853), duration: actionDuration))
-		
-		Timer.scheduledTimer(withTimeInterval: actionDuration/3, repeats: false, block: {_ in
-			self.gearPointsUp.removeFromParent()
-		})
-		
-		//gearPointsUp.run(SKAction.fadeOut(withDuration: actionDuration/2))
 		Timer.scheduledTimer(withTimeInterval: actionDuration, repeats: false, block: {_ in
-			self.score = self.score + 1
 			self.leftGear.removeAllActions()
 			self.leftGear.removeFromParent()
-			self.leftGear = self.rightGearHolder
+			self.leftGear = self.rightGearHolder?.copy() as? SKSpriteNode
+			self.leftGearRefCopy = self.leftGear?.copy() as? SKSpriteNode
 			self.leftGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/6)
+			self.leftGear.position = CGPoint(x: 0, y: self.frame.size.width/3)
 			self.rightGear.removeAllActions()
 			self.rightGear.removeFromParent()
 			self.rightGear = self.randomRightGearGenerator()
 			self.rightGear.size = CGSize(width:self.frame.size.width/1.5, height:self.frame.size.width/1.5)
-			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/6)
+			self.rightGear.position = CGPoint(x: self.frame.size.width + self.frame.size.width/1.5, y: self.frame.size.width/3)
 			self.rightGear.run(SKAction.moveBy(x: -1 * (self.frame.size.width/1.5), y: 0, duration: actionDuration/3))
 		
 		
